@@ -40,7 +40,7 @@ const CandidateCard = ({ id, name, voteCount }) => {
           style={{ width: "100%", height: 140 }}
         />
       </Grid>
-      {voteCountNum != null && (
+      {voteCountNum != null && !isNaN(voteCountNum) && (
         <Grid item xs={12} sx={{ textAlign: "center", p: 2 }}>
           <Typography>
             <strong>{voteCountNum}</strong> votes

@@ -9,6 +9,8 @@ import {
   RadioGroup,
   FormControlLabel,
   FormControl,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import PropTypes from "prop-types";
 
@@ -17,6 +19,10 @@ import CandidateCard from "@/shared/CandidateCard";
 const Vote = ({ contract, currentAccount }) => {
   const [candidates, setCandidates] = useState([]);
   const [vote, setVote] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [voteAdded, setVoteAdded] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [electionState, setElectionState] = useState(0);
   const getCandidates = async () => {
     if (contract) {
@@ -35,9 +41,13 @@ const Vote = ({ contract, currentAccount }) => {
       if (contract) {
         await contract.methods.vote(candidate).send({ from: currentAccount });
         getCandidates();
+        setSuccessMessage("Succesfully voted");
+        setVoteAdded(true);
       }
     } catch (error) {
       console.error("Error:", error);
+      setErrorMessage("You already voted");
+      setOpen(true);
     }
   };
 
@@ -145,6 +155,46 @@ const Vote = ({ contract, currentAccount }) => {
           )}
         </Grid>
       </form>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={() => setOpen(false)}
+        anchorOrigin={{ vertical: "center", horizontal: "center" }}
+        sx={{
+          ".MuiSnackbar-root": {
+            top: "50%", // Overrides the top position
+            transform: "translateY(-50%)", // Adjusts vertical alignment
+          },
+        }}
+      >
+        <Alert
+          onClose={() => setOpen(false)}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          {errorMessage}
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={voteAdded}
+        autoHideDuration={6000}
+        onClose={() => setVoteAdded(false)}
+        anchorOrigin={{ vertical: "center", horizontal: "center" }}
+        sx={{
+          ".MuiSnackbar-root": {
+            top: "50%", // Overrides the top position
+            transform: "translateY(-50%)", // Adjusts vertical alignment
+          },
+        }}
+      >
+        <Alert
+          onClose={() => setVoteAdded(false)}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          {successMessage}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
