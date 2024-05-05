@@ -61,7 +61,13 @@ contract Election {
         require(electionState == State.InProgress);
         electionState = State.Ended;
 
-       // Find the winner or handle ties
+
+    }
+	
+	//declare winner 
+	function declareWinner()
+	{
+		 // Find the winner or handle ties
         uint256 winningVoteCount = 0;
         //list of winning candidates to handle tie alike situation
     
@@ -74,7 +80,8 @@ contract Election {
             } else if (candidates[i].voteCount == winningVoteCount) {
                 winningCandidateIds.push(i);
         }
-    }
+	}
+    
 
     //Handle Ties in the elections feature
     // If there is a tie
@@ -86,10 +93,8 @@ contract Election {
 
     //Declare winner feature
     // Emit the event for the single winner
-    emit Log(string(abi.encodePacked("winner is ", candidates[winningCandidateIds[0]].name)));
     emit ElectionEnded(candidates[winningCandidateIds[0]].name, winningVoteCount);
-
-    }
+	}
 
     //Add Candidates feature
     function addCandidate(string memory _name) public {
