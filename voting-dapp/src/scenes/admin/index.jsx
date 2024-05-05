@@ -10,6 +10,7 @@ import {
   DialogContent,
   DialogContentText,
 } from "@mui/material";
+import { LiveTvRounded } from "@mui/icons-material";
 import PropTypes from "prop-types";
 
 import CandidateCard from "@/shared/CandidateCard";
@@ -121,7 +122,18 @@ const Admin = ({ contract, web3, currentAccount }) => {
             <Grid item xs={12}>
               <Typography align="center" variant="h6">
                 {electionState === 0 && "ADD VOTERS / CANDIDATES"}
-                {electionState === 1 && "SEE LIVE RESULTS"}
+                {electionState === 1 && (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "top",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <LiveTvRounded sx={{ mr: 1, fontSize: "20" }} />
+                    LIVE RESULT
+                  </Box>
+                )}
                 {electionState === 2 && "FINAL ELECTION RESULT"}
               </Typography>
               <Divider />
