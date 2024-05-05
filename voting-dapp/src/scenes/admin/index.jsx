@@ -17,19 +17,21 @@ import CandidateCard from "@/shared/CandidateCard";
 import CandidateForm from "@/shared/CandidateForm";
 import VoterForm from "@/shared/VoterForm";
 
-const Admin = ({ contract, web3, currentAccount }) => {
+const Admin = ({ contract, web3, currentAccount, ElectionID }) => {
   const [electionState, setElectionState] = useState(0);
   console.log(electionState);
   const [loading, setLoading] = useState(true);
   const [candidates, setCandidates] = useState([]);
   const [open, setOpen] = useState(false);
+  
   const getCandidates = async () => {
     if (contract) {
       console.log(contract);
-      const count = await contract.methods.candidatesCount().call();
+      const election = await contract.methods.elections(ElectionID).call();
+      const count =  election.candidatesCount;
       const temp = [];
       for (let i = 0; i < count; i++) {
-        const candidate = await contract.methods.getCandidateDetails(i).call();
+        const candidate = await contract.methods.getCandidateDetails(ElectionID, i).call();
         temp.push({ name: candidate[0], votes: candidate[1] });
       }
       setCandidates(temp);
@@ -40,7 +42,8 @@ const Admin = ({ contract, web3, currentAccount }) => {
 
   const getElectionState = async () => {
     if (contract) {
-      const state = await contract.methods.electionState().call();
+      const election = await contract.methods.elections(ElectionID).call();
+      const state =  election.state;
       setElectionState(parseInt(state));
     }
   };
@@ -62,7 +65,7 @@ const Admin = ({ contract, web3, currentAccount }) => {
     if (electionState === 0) {
       try {
         if (contract) {
-          await contract.methods.startElection().send({ from: currentAccount });
+          await contract.methods.startElection(ElectionID).send({ from: currentAccount });
           getElectionState();
         }
       } catch (error) {
@@ -71,7 +74,7 @@ const Admin = ({ contract, web3, currentAccount }) => {
     } else if (electionState === 1) {
       try {
         if (contract) {
-          await contract.methods.endElection().send({ from: currentAccount });
+          await contract.methods.endElection(ElectionID).send({ from: currentAccount });
           getElectionState();
         }
       } catch (error) {
@@ -163,11 +166,13 @@ const Admin = ({ contract, web3, currentAccount }) => {
                     contract={contract}
                     web3={web3}
                     currentAccount={currentAccount}
+                    ElectionID = {ElectionID}
                   />
                   <VoterForm
                     contract={contract}
                     web3={web3}
                     currentAccount={currentAccount}
+                    ElectionID = {ElectionID}
                   />
                 </Box>
               </Grid>

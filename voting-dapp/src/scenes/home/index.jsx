@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import ElectionContract from "@/contracts/Election.json";
 import getWeb3 from "@/helper/getWeb3";
 
 import Admin from "@/scenes/admin";
 import Vote from "@/scenes/vote";
+import ElectionList from "@/scenes/ElectionDashboard";
 
 const Home = () => {
   const [role, setRole] = useState(2);
@@ -12,6 +13,15 @@ const Home = () => {
   const [currentAccount, setCurrentAccount] = useState(null);
   const [contract, setContract] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [ElectionID, setElectionId] = useState(0);
+  const [ElectionListD, setElectionListD] = useState(true); // Controls visibility of ElectionList
+
+  const handleSetElectionId = (id) => {
+    setElectionListD(false); // Hide the election list when an election is selected
+    setElectionId(id); // Set the current election ID
+  };
+  
+
   const loadWeb3 = async () => {
     try {
       const web3 = await getWeb3();
@@ -25,20 +35,16 @@ const Home = () => {
       setWeb3(web3);
       setCurrentAccount(accounts[0]);
       setContract(instance);
-      console.log("init");
       setLoading(false);
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error initializing Web3:", error);
     }
   };
 
   const getRole = async () => {
     if (contract) {
-      const user = await contract.methods.getRole(currentAccount).call();
-      setRole(parseInt(user));
-      console.log("role:");
-      console.log(role);
-      setLoading(false);
+      const userRole = await contract.methods.getRole(ElectionID, currentAccount).call();
+      setRole(parseInt(userRole));
     }
   };
 
@@ -47,8 +53,16 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    getRole();
-  }, [contract]);
+    if (contract && currentAccount) {
+      getRole();
+    }
+  }, [contract, ElectionID, currentAccount]);
+
+  // Toggles the display of ElectionList
+  const toggleElectionList = () => {
+    setElectionListD(!ElectionListD);
+  };
+
   return (
     <Box
       sx={{
@@ -70,32 +84,48 @@ const Home = () => {
         </Box>
       ) : (
         <Box>
-          {role === 1 && (
-            <Admin
-              contract={contract}
-              web3={web3}
-              currentAccount={currentAccount}
-            />
-          )}
+          <Button onClick={toggleElectionList}>
+            {ElectionListD ? "Hide Election List" : "Show Election List"}
+          </Button>
 
-          {role === 2 && (
-            <Vote
+          {ElectionListD ? (
+            <ElectionList
               contract={contract}
-              web3={web3}
               currentAccount={currentAccount}
+              setElectionId={handleSetElectionId}
             />
-          )}
+          ) : (
+            <Box>
+              {role === 1 && (
+                <Admin
+                  contract={contract}
+                  web3={web3}
+                  currentAccount={currentAccount}
+                  ElectionID={ElectionID}
+                />
+              )}
 
-          {role === 3 && (
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "80vh",
-              }}
-            >
-              Access Denied
+              {role === 2 && (
+                <Vote
+                  contract={contract}
+                  web3={web3}
+                  currentAccount={currentAccount}
+                  ElectionID={ElectionID}
+                />
+              )}
+
+              {role === 3 && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "80vh",
+                  }}
+                >
+                  Access Denied
+                </Box>
+              )}
             </Box>
           )}
         </Box>
@@ -103,4 +133,5 @@ const Home = () => {
     </Box>
   );
 };
+
 export default Home;
