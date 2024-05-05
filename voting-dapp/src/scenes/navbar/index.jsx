@@ -24,7 +24,6 @@ const Navbar = () => {
           Decentralized Voting System
         </Typography>
         <Box>
-          <Button color="inherit">Candidates</Button>
           <Button color="inherit" onClick={onLogout}>
             Logout
           </Button>

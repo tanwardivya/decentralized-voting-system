@@ -1,10 +1,7 @@
-import * as React from "react";
 import { Button, Typography } from "@mui/material";
 import CoverLayout from "@/shared/CoverLayout";
 import { useNavigate } from "react-router-dom";
-
-const backgroundImage =
-  "https://source.unsplash.com/Q1p7bh3SHj8";
+import background from "@/assets/background.png";
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -18,7 +15,7 @@ export default function LandingPage() {
   return (
     <CoverLayout
       sxBackground={{
-        backgroundImage: `url(${backgroundImage})`,
+        backgroundImage: `url(${background})`,
         backgroundColor: "#7fc7d9", // Average color of the background image.
         backgroundPosition: "center",
       }}
@@ -26,7 +23,7 @@ export default function LandingPage() {
       {/* Increase the network loading priority of the background image. */}
       <img
         style={{ display: "none" }}
-        src={backgroundImage}
+        src={background}
         alt="increase priority"
       />
       <Typography color="inherit" align="center" variant="h2" marked="center">
@@ -38,7 +35,7 @@ export default function LandingPage() {
         variant="h5"
         sx={{ mb: 4, mt: { sx: 4, sm: 10 } }}
       >
-         Ethereum blockchain based decentralized voting system.
+        Ethereum blockchain based decentralized voting system.
       </Typography>
       <Button
         color="primary"

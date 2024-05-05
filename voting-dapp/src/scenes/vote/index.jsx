@@ -24,15 +24,21 @@ const Vote = ({ contract, currentAccount, ElectionID }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [electionState, setElectionState] = useState(0);
-  
+
   const getCandidates = async () => {
     if (contract) {
       const election = await contract.methods.elections(ElectionID).call();
-      const count =  election.candidatesCount;
+      const count = election.candidatesCount;
       const temp = [];
       for (let i = 0; i < count; i++) {
-        const candidate = await contract.methods.getCandidateDetails(ElectionID, i).call();
-        temp.push({ name: candidate[0], votes: candidate[1] });
+        const candidate = await contract.methods
+          .getCandidateDetails(ElectionID, i)
+          .call();
+        temp.push({
+          name: candidate[0],
+          votes: candidate[1],
+          gender: candidate[2],
+        });
       }
       setCandidates(temp);
     }
@@ -41,7 +47,9 @@ const Vote = ({ contract, currentAccount, ElectionID }) => {
   const voteCandidate = async (candidate) => {
     try {
       if (contract) {
-        await contract.methods.vote(ElectionID, candidate).send({ from: currentAccount });
+        await contract.methods
+          .vote(ElectionID, candidate)
+          .send({ from: currentAccount });
         getCandidates();
         setSuccessMessage("Succesfully voted");
         setVoteAdded(true);
@@ -111,7 +119,11 @@ const Vote = ({ contract, currentAccount, ElectionID }) => {
                         control={<Radio />}
                         value={index}
                         label={
-                          <CandidateCard id={index} name={candidate.name} />
+                          <CandidateCard
+                            id={index}
+                            name={candidate.name}
+                            gender={candidate.gender}
+                          />
                         }
                       />
                     ))}
@@ -150,6 +162,7 @@ const Vote = ({ contract, currentAccount, ElectionID }) => {
                     <CandidateCard
                       id={index}
                       name={candidate.name}
+                      gender={candidate.gender}
                       voteCount={candidate.votes}
                     />
                   </Box>

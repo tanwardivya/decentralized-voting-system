@@ -12,6 +12,7 @@ contract Election {
         uint256 id;
         string name;
         uint256 voteCount;
+        string gender;
     }
 
     struct Voter {
@@ -56,12 +57,12 @@ contract Election {
         electionCount++;
     }
 
-    function addCandidate(uint256 electionId, string memory _name) public onlyOwner {
+    function addCandidate(uint256 electionId, string memory _name, string memory _gender) public onlyOwner {
         require(elections[electionId].state == ElectionState.NotStarted, "Cannot add candidates after election started");
 
         ElectionInstance storage election = elections[electionId];
         uint256 candidateId = election.candidatesCount;
-        election.candidates[candidateId] = Candidate(candidateId, _name, 0);
+        election.candidates[candidateId] = Candidate(candidateId, _name, 0, _gender);
         election.candidatesCount++;
     }
 
@@ -105,14 +106,15 @@ contract Election {
     function getCandidateDetails(uint256 electionId, uint256 _candidateId)
         public
         view
-        returns (string memory, uint256)
+        returns (string memory, uint256, string memory)
     {
         ElectionInstance storage election = elections[electionId];
         require(_candidateId < election.candidatesCount, "Invalid candidate ID");
 
         return (
             election.candidates[_candidateId].name,
-            election.candidates[_candidateId].voteCount
+            election.candidates[_candidateId].voteCount,
+            election.candidates[_candidateId].gender
         );
     }
 
