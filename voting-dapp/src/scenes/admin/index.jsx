@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import PropTypes from "prop-types";
 
-import Candidate from "@/shared/CandidateCard";
+import CandidateCard from "@/shared/CandidateCard";
 import CandidateForm from "@/shared/CandidateForm";
 import VoterForm from "@/shared/VoterForm";
 
@@ -176,7 +176,7 @@ const Admin = ({ contract, web3, currentAccount }) => {
                 {candidates &&
                   candidates.map((candidate, index) => (
                     <Box sx={{ mx: 2 }} key={index}>
-                      <Candidate
+                      <CandidateCard
                         id={index}
                         name={candidate.name}
                         voteCount={candidate.votes}

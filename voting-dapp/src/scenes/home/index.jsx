@@ -4,6 +4,7 @@ import ElectionContract from "@/contracts/Election.json";
 import getWeb3 from "@/helper/getWeb3";
 
 import Admin from "@/scenes/admin";
+import Vote from "@/scenes/vote";
 
 const Home = () => {
   const [role, setRole] = useState(2);
@@ -78,16 +79,11 @@ const Home = () => {
           )}
 
           {role === 2 && (
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "80vh",
-              }}
-            >
-              Vote
-            </Box>
+            <Vote
+              contract={contract}
+              web3={web3}
+              currentAccount={currentAccount}
+            />
           )}
 
           {role === 3 && (

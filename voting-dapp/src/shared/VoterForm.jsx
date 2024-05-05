@@ -7,7 +7,7 @@ const VoterForm = ({ contract, currentAccount }) => {
   const handleForm = async (event) => {
     event.preventDefault();
     try {
-      await contract.methods.addCandidate(name).send({ from: currentAccount });
+      await contract.methods.addVoter(name).send({ from: currentAccount });
       console.log("voter added");
     } catch (error) {
       console.log(error);
