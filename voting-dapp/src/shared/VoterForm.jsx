@@ -2,12 +2,12 @@ import { useState } from "react";
 import { Box, Button, TextField, Grid } from "@mui/material";
 import PropTypes from "prop-types";
 
-const VoterForm = ({ contract, currentAccount }) => {
+const VoterForm = ({ contract, currentAccount, ElectionID }) => {
   const [name, setName] = useState("");
   const handleForm = async (event) => {
     event.preventDefault();
     try {
-      await contract.methods.addVoter(name).send({ from: currentAccount });
+      await contract.methods.addVoter(ElectionID, name).send({ from: currentAccount });
       console.log("voter added");
     } catch (error) {
       console.log(error);

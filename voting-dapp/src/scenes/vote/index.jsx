@@ -14,16 +14,18 @@ import PropTypes from "prop-types";
 
 import CandidateCard from "@/shared/CandidateCard";
 
-const Vote = ({ contract, currentAccount }) => {
+const Vote = ({ contract, currentAccount, ElectionID }) => {
   const [candidates, setCandidates] = useState([]);
   const [vote, setVote] = useState(null);
   const [electionState, setElectionState] = useState(0);
+  
   const getCandidates = async () => {
     if (contract) {
-      const count = await contract.methods.candidatesCount().call();
+      const election = await contract.methods.elections(ElectionID).call();
+      const count =  election.candidatesCount;
       const temp = [];
       for (let i = 0; i < count; i++) {
-        const candidate = await contract.methods.getCandidateDetails(i).call();
+        const candidate = await contract.methods.getCandidateDetails(ElectionID, i).call();
         temp.push({ name: candidate[0], votes: candidate[1] });
       }
       setCandidates(temp);
@@ -33,7 +35,7 @@ const Vote = ({ contract, currentAccount }) => {
   const voteCandidate = async (candidate) => {
     try {
       if (contract) {
-        await contract.methods.vote(candidate).send({ from: currentAccount });
+        await contract.methods.vote(ElectionID, candidate).send({ from: currentAccount });
         getCandidates();
       }
     } catch (error) {
@@ -43,7 +45,8 @@ const Vote = ({ contract, currentAccount }) => {
 
   const getElectionState = async () => {
     if (contract) {
-      const state = await contract.methods.electionState().call();
+      const election = await contract.methods.elections(ElectionID).call();
+      const state = election.state;
       setElectionState(parseInt(state));
     }
   };
