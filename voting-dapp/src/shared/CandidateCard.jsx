@@ -1,12 +1,12 @@
 import { Grid, Typography } from "@mui/material";
-import image from "@/assets/image.png";
+import male from "@/assets/male.png";
+import female from "@/assets/female.png";
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
 
-const CandidateCard = ({ id, name, voteCount }) => {
+const CandidateCard = ({ id, name, gender, voteCount }) => {
   const voteCountNum = Number(voteCount);
   const theme = useTheme();
-
   return (
     <Grid
       container
@@ -35,9 +35,9 @@ const CandidateCard = ({ id, name, voteCount }) => {
         }}
       >
         <img
-          src={image}
-          alt="green iguana"
-          style={{ width: "100%", height: 140 }}
+          src={gender == "Male" ? male : female}
+          alt={gender == "Male" ? "Male" : "Female"}
+          style={{ width: "100%", height: 160 }}
         />
       </Grid>
       {voteCountNum != null && !isNaN(voteCountNum) && (
@@ -54,6 +54,7 @@ const CandidateCard = ({ id, name, voteCount }) => {
 CandidateCard.propTypes = {
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
+  gender: PropTypes.string.isRequired,
   voteCount: PropTypes.any,
 };
 
