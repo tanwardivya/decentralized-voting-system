@@ -31,6 +31,9 @@ contract Election {
 
     uint256 public votersCount = 0;
 
+    uint256[] winningCandidateIds;
+
+
     constructor() {
         owner = msg.sender;
         electionState = State.NotStarted;
@@ -39,19 +42,56 @@ contract Election {
     }
 
     event Voted(uint256 indexed _candidateId);
+    event Log(string message);
+    event ElectionEnded(string winnerName, uint256 voteCount);
+
+
+
 
     function startElection() public {
+        emit Log("election has started");
         require(msg.sender == owner);
         require(electionState == State.NotStarted);
         electionState = State.InProgress;
     }
 
     function endElection() public {
+        emit Log("election has ended");
         require(msg.sender == owner);
         require(electionState == State.InProgress);
         electionState = State.Ended;
+
+       // Find the winner or handle ties
+        uint256 winningVoteCount = 0;
+        //list of winning candidates to handle tie alike situation
+    
+        for (uint256 i = 0; i < candidatesCount; i++) {
+            if (candidates[i].voteCount > winningVoteCount) {
+                winningVoteCount = candidates[i].voteCount;
+                delete winningCandidateIds; // Clear previous winners
+                //winningCandidateIds = new uint256 ; // Reinitialize the array
+                winningCandidateIds[0] = i;
+            } else if (candidates[i].voteCount == winningVoteCount) {
+                winningCandidateIds.push(i);
+        }
     }
 
+    //Handle Ties in the elections feature
+    // If there is a tie
+    if (winningCandidateIds.length > 1) {
+        //  select one winner randomly from the tied candidates list
+        uint256 randomIndex = uint256(keccak256(abi.encodePacked(block.timestamp, block.difficulty))) % winningCandidateIds.length;
+        winningCandidateIds = [winningCandidateIds[randomIndex]];
+    }
+
+    //Declare winner feature
+    // Emit the event for the single winner
+    emit Log(string(abi.encodePacked("winner is ", candidates[winningCandidateIds[0]].name)));
+    emit ElectionEnded(candidates[winningCandidateIds[0]].name, winningVoteCount);
+
+    }
+
+    //Add Candidates feature
     function addCandidate(string memory _name) public {
         require(owner == msg.sender, "Only owner can add candidates");
         require(
@@ -62,6 +102,7 @@ contract Election {
         candidates[candidatesCount] = Candidate(candidatesCount, _name, 0);
         candidatesCount++;
     }
+    //Add voters feature
 
     function addVoter(address _voter) public {
         require(owner == msg.sender, "Only owner can add voter");
@@ -74,6 +115,7 @@ contract Election {
         isVoter[_voter] = true;
     }
 
+    //get Roles feature
     function getRole(address _current) public view returns (uint256) {
         if (owner == _current) {
             return 1;
