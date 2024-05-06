@@ -1,14 +1,14 @@
 ## `Decentralized Voting System - CPSC 559 Advanced Blockchain Technology`
 
+<p>Decentralized voting system provides a voting mechanism by utilizing blockchain technology to conduct elections and decision making processes in a decentralized manner.
+<p>In these kinds of voting systems, the voting process is distributed across a network of computers in a decentralized manner instead of having a single entity to control the voting. This mechanism ensures that no single entity can control the outcome of the voting.
+
 
 ## Team Members:
 1. Gouri Babasaheb Sabale:  (CWID: 885189761) (Email: gourisabale123@csu.fullerton.edu)
 2. Divya Tanwar (CWID:885207738 (Email: divyatanwar@csu.fullerton.edu))
 3. Venkat Jawahar Reddy Yerrabathini (CWID: 885187195) (Email: yvjr95@gmail.com)
 
-
-<p>Decentralized voting system provides a voting mechanism by utilizing blockchain technology to conduct elections and decision making processes in a decentralized manner.
-<p>In these kinds of voting systems, the voting process is distributed across a network of computers in a decentralized manner instead of having a single entity to control the voting. This mechanism ensures that no single entity can control the outcome of the voting.
 
 
 ## Key Attributes
@@ -36,7 +36,7 @@
 10.**Get Candidate Details:** This feature helps to fetch candidate details
 
 
-# Requirments:
+## Requirments:
 
 - ReactJS
 - Metamask
