@@ -9,9 +9,12 @@
 2. Divya Tanwar (CWID:885207738 (Email: divyatanwar@csu.fullerton.edu))
 3. Venkat Jawahar Reddy Yerrabathini (CWID: 885187195) (Email: yvjr95@gmail.com)
 
+## Link to the Github Project:
+     https://github.com/tanwardivya/decentralized-voting-system.git
 
 
-## Key Attributes
+
+## Key Attributes:
 
 1. **Secure Decentralized Voting:** Conduct voting process securely with complete confidence. Advanced Blockchain technology leverages decentralized storage to ensure the transparency and security of votes, eliminating vote manipulation and single entity of control.
 
@@ -51,7 +54,7 @@
 - Install Node.js
 - Install Ganache
 
-### Steps to run the Project
+### Steps to run the Project:
 
 1. Clone the project
 
@@ -90,14 +93,14 @@ npm run dev
 Visit URL in your browser: <http://localhost:5173>
 
 
-##  Metamask Connection
+##  Metamask Connection:
 
       Use account private key and import it to metamask.
       For the "Network Name" field enter "localhost".
       For the "New RPC URL" field enter "http://127.0.0.1:7545".
       For the chain ID enter "1337". Then click save.
 
-## Screenshots
+## Screenshots:
 
 Landing page:
 ![landingpage](screenshots/landingpage.png) &nbsp;
@@ -119,7 +122,7 @@ Creating a election:
 ![selectmultipleelectionpage](screenshots/selectmultipleelectionpage.png) &nbsp;
 
 
-## References
+## References:
 
 https://docs.soliditylang.org/en/develop/solidity-by-example.html
 https://github.com/ashishlamsal/voting-dapp
