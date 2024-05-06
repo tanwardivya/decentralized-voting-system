@@ -28,6 +28,8 @@ contract Election {
         uint256 candidatesCount;
         mapping(address => Voter) voters;
         uint256 votersCount;
+		uint256[] winningCandidateIds;
+
     }
 
     address public owner;
@@ -45,6 +47,9 @@ contract Election {
     }
 
     event VoteCasted(uint256 indexed electionId, uint256 indexed candidateId);
+
+	event ElectionEnded(string winnerName, uint256 voteCount);
+
 
     function createElection(string memory _name) public onlyOwner {
         ElectionInstance storage newElection = elections[electionCount];
@@ -88,6 +93,38 @@ contract Election {
 
         elections[electionId].state = ElectionState.Ended;
     }
+
+	function declareWinner(uint256 electionId) public onlyOwner returns (string memory, uint256) {
+    ElectionInstance storage election = elections[electionId];
+
+    uint256 winningVoteCount = 0;
+    delete election.winningCandidateIds; // Clear previous winners
+
+    // Find winning candidate(s)
+    for (uint256 i = 0; i < election.candidatesCount; i++) {
+        if (election.candidates[i].voteCount > winningVoteCount) {
+            winningVoteCount = election.candidates[i].voteCount;
+            election.winningCandidateIds = [i]; // Reinitialize the winning candidate ID array
+        } else if (election.candidates[i].voteCount == winningVoteCount) {
+            election.winningCandidateIds.push(i); // Handle ties
+        }
+    }
+
+    // Handle ties with randomness
+    if (election.winningCandidateIds.length > 1) {
+        bytes32 blockHash = blockhash(block.number - 1);
+        // Use block hash for randomness
+        uint256 randomIndex = uint256(keccak256(abi.encodePacked(blockHash))) % election.winningCandidateIds.length;
+        election.winningCandidateIds = [election.winningCandidateIds[randomIndex]]; // Choose one winner
+    }
+
+    // Return the winner's name and winning vote count
+    return (
+        election.candidates[election.winningCandidateIds[0]].name,
+        winningVoteCount
+    );
+}
+
 
     function vote(uint256 electionId, uint256 _candidateId) public {
         require(elections[electionId].state == ElectionState.InProgress, "Election is not in progress");

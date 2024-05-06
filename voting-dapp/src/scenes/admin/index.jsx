@@ -23,6 +23,8 @@ const Admin = ({ contract, web3, currentAccount, ElectionID }) => {
   const [loading, setLoading] = useState(true);
   const [candidates, setCandidates] = useState([]);
   const [open, setOpen] = useState(false);
+  const [winner, setWinner] = useState({ name: "", voteCount: "" });
+
 
   const getCandidates = async () => {
     if (contract) {
@@ -51,6 +53,9 @@ const Admin = ({ contract, web3, currentAccount, ElectionID }) => {
       const election = await contract.methods.elections(ElectionID).call();
       const state = election.state;
       setElectionState(parseInt(state));
+      if (parseInt(state) === 2) { // If election has ended, declare the winner
+        await declareWinner();
+      }
     }
   };
 
@@ -58,6 +63,7 @@ const Admin = ({ contract, web3, currentAccount, ElectionID }) => {
     getElectionState();
     getCandidates();
   }, [contract]);
+
 
   const handleEnd = () => {
     setOpen(true);
@@ -86,6 +92,7 @@ const Admin = ({ contract, web3, currentAccount, ElectionID }) => {
             .endElection(ElectionID)
             .send({ from: currentAccount });
           getElectionState();
+          
         }
       } catch (error) {
         console.error("Error:", error);
@@ -94,6 +101,24 @@ const Admin = ({ contract, web3, currentAccount, ElectionID }) => {
 
     setOpen(false);
   };
+
+  const declareWinner = async () => {
+    try {
+      if (contract) {
+        const winnerDetails = await contract.methods
+        .declareWinner(ElectionID)
+        .call({ from: currentAccount });
+          console.log("Winner is", winnerDetails);
+        setWinner({
+          name: winnerDetails[0],
+          voteCount: winnerDetails[1].toString(),
+        });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <Box>
       {loading ? (
@@ -151,6 +176,19 @@ const Admin = ({ contract, web3, currentAccount, ElectionID }) => {
               </Typography>
               <Divider />
             </Grid>
+
+          {electionState === 2 && (
+            <Grid item xs={12}>
+            <Box>
+              <Typography variant="h6" align="center" gutterBottom>
+                Winner: {winner.name}
+              </Typography>
+              <Typography variant="body1" align="center">
+                Votes: {winner.voteCount}
+              </Typography>
+            </Box>
+            </Grid>
+          )}
 
             {electionState === 0 && (
               <Grid
