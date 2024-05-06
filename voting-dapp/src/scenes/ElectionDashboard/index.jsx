@@ -6,7 +6,6 @@ const ElectionList = ({ contract, currentAccount, setElectionId }) => {
   const [elections, setElections] = useState([]);
   const [newElectionName, setNewElectionName] = useState("");
 
-  useEffect(() => {
     const fetchElections = async () => {
       if (contract) {
         try {
@@ -28,8 +27,10 @@ const ElectionList = ({ contract, currentAccount, setElectionId }) => {
       }
     };
     
-    fetchElections(); // Fetch all elections when the component mounts
-  }, [contract]);
+    useEffect(() => {
+        fetchElections(); // Fetch all elections when the component mounts
+      }, [contract]); // Only re-run if the contract changes
+    
   
 
   const handleDeleteElection = async (electionId) => {
@@ -45,6 +46,7 @@ const ElectionList = ({ contract, currentAccount, setElectionId }) => {
       await contract.methods.createElection(newElectionName).send({ from: currentAccount });
       // Clear the new election name and fetch elections again to refresh the list
       setNewElectionName("");
+      fetchElections(); // Fetch all elections when the component mounts
     }
   };
 

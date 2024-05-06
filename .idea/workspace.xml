@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49329208-e819-4f8a-b4a0-dfb8152ebd28" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/contracts/Voting.sol" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/Voting.sol" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/voting-dapp/src/contracts/Election.json" beforeDir="false" afterPath="$PROJECT_DIR$/voting-dapp/src/contracts/Election.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/voting-dapp/src/contracts/Migrations.json" beforeDir="false" afterPath="$PROJECT_DIR$/voting-dapp/src/contracts/Migrations.json" afterDir="false" />
-    </list>
+    <list default="true" id="49329208-e819-4f8a-b4a0-dfb8152ebd28" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,7 +44,7 @@
       <option name="presentableId" value="Default" />
       <updated>1714883950896</updated>
       <workItem from="1714883952072" duration="18266000" />
-      <workItem from="1714967919862" duration="732000" />
+      <workItem from="1714967919862" duration="773000" />
     </task>
     <servers />
   </component>
