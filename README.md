@@ -2,16 +2,16 @@
 
 
 ## Team Members:
-1. **Gouri Babasaheb Sabale:  (CWID: 885189761)**
-2. **Divya Tanwar (CWID:885207738)**
-3. **Venkat Jawahar Reddy Yerrabathini (CWID: 885187195)**
+1. Gouri Babasaheb Sabale:  (CWID: 885189761) (Email: gourisabale123@csu.fullerton.edu)
+2. Divya Tanwar (CWID:885207738 (Email: divyatanwar@csu.fullerton.edu))
+3. Venkat Jawahar Reddy Yerrabathini (CWID: 885187195) (Email: yvjr95@gmail.com)
 
 
 <p>Decentralized voting system provides a voting mechanism by utilizing blockchain technology to conduct elections and decision making processes in a decentralized manner.
 <p>In these kinds of voting systems, the voting process is distributed across a network of computers in a decentralized manner instead of having a single entity to control the voting. This mechanism ensures that no single entity can control the outcome of the voting.
 
 
-## Key Attributes of Decentralized Voting System
+## Key Attributes
 
 1. **Secure Decentralized Voting:** Conduct voting process securely with complete confidence. Advanced Blockchain technology leverages decentralized storage to ensure the transparency and security of votes, eliminating vote manipulation and single entity of control.
 
@@ -22,7 +22,7 @@
 4. **Smart Contract Integration:** We will use smart contracts to automate voting mechanisms which involve voter registration, candidate registration, voter counting, declare winners etc.
 
 
-## Main Application specific features of Decentralized Voting System
+## Main Features:
 
 1. **Add Candidates:** Using this feature, owner of the Election add candidates
 2. **Add Voters:** Using this feature, owner of the Election add voters
@@ -34,8 +34,6 @@
 8. **Handle Tie Situations:** This feature is introduced to handle ties in the elections by choosing winner randomly
 9. **Declare Winner:** With this feature , we can declare the final winner of the current election
 10.**Get Candidate Details:** This feature helps to fetch candidate details
-
-
 
 
 # Requirments:
