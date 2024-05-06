@@ -1,14 +1,14 @@
-## `Decentralized Voting System - CPSC Advanced Blockchain Final Project 559`
+## `Decentralized Voting System - CPSC 559 Advanced Blockchain Technology`
 
 
 ## Team Members:
-1. ** Gouri Babasaheb Sabale:  (CWID: 885189761)**
-2. ** Divya Tanwar (CWID:885207738)**
-3. ** Venkat Jawahar Reddy Yerrabathini (CWID: 885187195)**
+1. **Gouri Babasaheb Sabale:  (CWID: 885189761)**
+2. **Divya Tanwar (CWID:885207738)**
+3. **Venkat Jawahar Reddy Yerrabathini (CWID: 885187195)**
 
 
-Decentralized voting system provides a voting mechanism by utilizing blockchain technology to conduct elections and decision making processes in a decentralized manner.
-In these kinds of voting systems, the voting process is distributed across a network of computers in a decentralized manner instead of having a single entity to control the voting. This mechanism ensures that no single entity can control the outcome of the voting.
+<p>Decentralized voting system provides a voting mechanism by utilizing blockchain technology to conduct elections and decision making processes in a decentralized manner.
+<p>In these kinds of voting systems, the voting process is distributed across a network of computers in a decentralized manner instead of having a single entity to control the voting. This mechanism ensures that no single entity can control the outcome of the voting.
 
 
 ## Key Attributes of Decentralized Voting System
@@ -24,28 +24,27 @@ In these kinds of voting systems, the voting process is distributed across a net
 
 ## Main Application specific features of Decentralized Voting System
 
-1. ** Add Candidates: ** Using this feature, owner of the Election add candidates
-2. ** Add Voters: ** Using this feature, owner of the Election add voters
-3. ** Start Election: ** Using this feature , owner can start the election
-4. ** End Election: ** Using this feature , owner can end the election
-5. ** Add multiple Elections: ** Using this feature , owner can add multiple elections
-6. ** Election Dashboard to view the status of all Elections: ** Using this feature , owner as well as voter can see multiple elections statuses
-7. ** Vote for the candidates: ** Using this feature , voter can vote for the candidates
-8. ** Handle Tie Situations: ** This feature is introduced to handle ties in the elections by choosing winner randomly
-9. ** Declare Winner: ** With this feature , we can declare the final winner of the current election
-10.** Get Candidate Details: ** This feature helps to fetch candidate details
+1. **Add Candidates:** Using this feature, owner of the Election add candidates
+2. **Add Voters:** Using this feature, owner of the Election add voters
+3. **Start Election:** Using this feature , owner can start the election
+4. **End Election:** Using this feature , owner can end the election
+5. **Add multiple Elections:** Using this feature , owner can add multiple elections
+6. **Election Dashboard to view the status of all Elections:** Using this feature , owner as well as voter can see multiple elections statuses
+7. **Vote for the candidates:** Using this feature , voter can vote for the candidates
+8. **Handle Tie Situations:** This feature is introduced to handle ties in the elections by choosing winner randomly
+9. **Declare Winner:** With this feature , we can declare the final winner of the current election
+10.**Get Candidate Details:** This feature helps to fetch candidate details
 
 
 
 
 # Requirments:
 
-- Metamask account
+- ReactJS
+- Metamask
 - Ganache
-- Node.js
-- web3.js
-- truffle
-- react 
+- Solidity
+- Node 18.2.0
 
 
 ## Setting Up the Project Enviorment:
@@ -54,25 +53,75 @@ In these kinds of voting systems, the voting process is distributed across a net
 - Install Node.js
 - Install Ganache
 
-## 1. Clone/download the repos
+### Steps to run the Project
 
-## 2. compile and migrate  smart contract
-- truffle compile
-- truffle migrate
+1. Clone the project
 
-## 2. Configure the project
+```bash
+cd decentralized-voting-system
+git clone https://github.com/tanwardivya/decentralized-voting-system
+```
 
-      npm install
-      npm run dev
+2. Start Ganache
 
-## 3. Metamask Connection
+Open the Ganache GUI client to start the local blockchain instance.
+
+3. Compile & Deploy Election Smart Contract
+
+```bash
+truffle compile
+truffle migrate
+```
+
+Note: We must migrate the election smart contract each time restart ganache.
+
+4. Configure Metamask
+
+- Unlock Metamask
+- Connect metamask to the local Etherum blockchain provided by Ganache.
+- Import an account provided by Ganache.
+
+5. Run the Front End Application
+
+```bash
+cd voting-dapp
+npm install
+npm run dev
+```
+
+Visit URL in your browser: <http://localhost:5173>
+
+
+##  Metamask Connection
 
       Use account private key and import it to metamask.
       For the "Network Name" field enter "localhost".
       For the "New RPC URL" field enter "http://127.0.0.1:7545".
       For the chain ID enter "1337". Then click save.
 
+## Screenshots
+
+Landing page:
+![landingpage](screenshots/landingpage.png) &nbsp;
+Admin page:
+![admin1](screenshots/admin1.png) &nbsp;
+Select Election:
+![selectelection](screenshots/selectelection.png) &nbsp;
+Add Voter:
+![addvoter](screenshots/addvoter.png) &nbsp;
+View Candidate:
+![candidatepage](screenshots/candidatepage.png) &nbsp;
+Voting Page:
+![votingpage](screenshots/votingpage.png) &nbsp;
+Election Progress:
+![votingpage2](screenshots/votingpage2.png) &nbsp;
+Election Result:
+![finalelectionresultpage](screenshots/finalelectionresultpage.png) &nbsp;
+Creating a election:
+![selectmultipleelectionpage](screenshots/selectmultipleelectionpage.png) &nbsp;
+
 
 ## References
 
 https://docs.soliditylang.org/en/develop/solidity-by-example.html
+https://github.com/ashishlamsal/voting-dapp
