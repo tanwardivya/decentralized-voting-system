@@ -24,6 +24,7 @@ const Vote = ({ contract, currentAccount, ElectionID }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [electionState, setElectionState] = useState(0);
+  const [winner, setWinner] = useState({ name: "", voteCount: "" });
 
   const getCandidates = async () => {
     if (contract) {
@@ -66,6 +67,26 @@ const Vote = ({ contract, currentAccount, ElectionID }) => {
       const election = await contract.methods.elections(ElectionID).call();
       const state = election.state;
       setElectionState(parseInt(state));
+      if (parseInt(state) === 2) {
+        // If election has ended, declare the winner
+        await declareWinner();
+      }
+    }
+  };
+  const declareWinner = async () => {
+    try {
+      if (contract) {
+        const winnerDetails = await contract.methods
+          .declareWinner(ElectionID)
+          .call({ from: currentAccount });
+        console.log("Winner is", winnerDetails);
+        setWinner({
+          name: winnerDetails[0],
+          voteCount: winnerDetails[1].toString(),
+        });
+      }
+    } catch (error) {
+      console.error("Error:", error);
     }
   };
 
@@ -143,7 +164,19 @@ const Vote = ({ contract, currentAccount, ElectionID }) => {
               </Grid>
             </>
           )}
-
+          {electionState === 2 && (
+            <Grid item xs={12}>
+              <Box>
+                <Typography variant="h6" align="center" gutterBottom>
+                  Winner: {winner.name}
+                </Typography>
+                <Typography variant="body1" align="center">
+                  Votes: {winner.voteCount}
+                </Typography>
+              </Box>
+              <Divider />
+            </Grid>
+          )}
           {electionState === 2 && (
             <Grid
               item
